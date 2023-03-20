@@ -52,8 +52,8 @@ GET http://localhost:3000/api/products
 
 ###
 
-// HÄMTA SPECIFIK PRODUKT
-GET http://localhost:3000/api/products/ // ID PÅ PRODUKT
+// HÄMTA SPECIFIK PRODUKT // ID PÅ PRODUKT
+GET http://localhost:3000/api/products/ 
 
 ###
 
