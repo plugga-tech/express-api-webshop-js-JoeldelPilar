@@ -30,7 +30,6 @@ router.post('/', async function (req, res, next) {
 });
 
 router.post('/add', async function (req, res, next) {
-  // För VG kryptera lösenordet.
   try {
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
     let newUser = {

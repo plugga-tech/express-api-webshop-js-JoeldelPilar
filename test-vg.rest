@@ -13,7 +13,7 @@ POST http://localhost:3000/api/users/
 Content-Type: application/json
 
 {
-  "id": "64186e1bbad6e1d3a3f71a39"
+  "id": "641990e4b0eb44e978c8024a"
 }
 
 ###
@@ -23,8 +23,8 @@ POST http://localhost:3000/api/users/add
 Content-Type: application/json
 
 {
-  "name": "Kalle Kallesson",
-  "email": "KK@mail.com",
+  "name": "Best Bestsson",
+  "email": "BB@mail.com",
   "password": "test"
 }
 
@@ -35,7 +35,7 @@ POST http://localhost:3000/api/users/login
 Content-Type: application/json
 
 {
-  "email": "KK@mail.com",
+  "email": "BB@mail.com",
   "password": "test"
 }
 
@@ -61,7 +61,7 @@ Content-Type: application/json
 
 {
   "name": "Produkt 2",
-  "description": "Beskrivning av produkt 1",
+  "description": "Beskrivning av produkt 2",
   "price": 100,
   "lager": 10,
   "category": "// ID PÅ EN SPECIFIK KATEGORI",
