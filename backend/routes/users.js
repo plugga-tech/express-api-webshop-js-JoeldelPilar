@@ -7,25 +7,40 @@ const userModel = require('../models/user-model');
 
 router.get('/', async function (req, res, next) {
 
-  const users = await userModel.find().select('name email _id');
-  res.status(200).json(users)
+  try {
+    const users = await userModel.find().select('name email _id');
+    if (users.length === 0) {
+      res.status(302).send('No users to show!');
+    }
+    res.status(200).json(users)
+
+  } catch (err) {
+    res.status(500).json(err);
+  }
+
 
 });
 
 router.post('/', async function (req, res, next) {
-  // HÄMTA SPECIFIK USER 
-  // SKICKA HELA OBJEKTET
 
   const user = req.body.id
   console.log(user);
   const foundUser = await userModel.findOne({ _id: user });
   console.log(foundUser);
 
-  if (user === foundUser.id) {
-    res.status(200).json(foundUser)
-  } else {
-    res.status(404).json('Could not find user')
+  if (foundUser === null) {
+    return res.status(404).json('Could not find user');
   }
+  try {
+    if (user === foundUser.id) {
+      res.status(200).json(foundUser);
+    } else {
+      res.status(404).json('Could not find user');
+    }
+  } catch (err) {
+    res.status(500).json(err);
+  }
+
 
 });
 
@@ -47,8 +62,7 @@ router.post('/add', async function (req, res, next) {
 });
 
 router.post('/login', async function (req, res, next) {
-  // LOGGA IN USER
-  console.log(req.body)
+
   const user = req.body
   const foundUser = await userModel.findOne({ email: user.email });
   if (foundUser.email === null) {
