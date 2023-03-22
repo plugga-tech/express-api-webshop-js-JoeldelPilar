@@ -62,8 +62,8 @@ Content-Type: application/json
 {
   "name": "Produkt 2",
   "description": "Beskrivning av produkt 2",
-  "price": 100,
-  "lager": 10,
+  "price": 549,
+  "lager": 50,
   "category": "// ID PÅ EN SPECIFIK KATEGORI",
   "token": "1234key1234"
 }

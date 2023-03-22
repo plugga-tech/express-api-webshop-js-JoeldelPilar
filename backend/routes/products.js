@@ -29,23 +29,27 @@ router.get('/:id', async function (req, res, next) {
 
 });
 
-router.post('/add', async function (req, res, next) {
-  //SKAPA PRODUKT
-  const token = req.body.token;
+router.post('/add', async function (req, res) {
+
   const existingProduct = await productModel.findOne({ name: req.body.name });
+  const newProduct = {
+    name: req.body.name,
+    description: req.body.description,
+    price: req.body.price,
+    lager: req.body.lager,
+    category: req.body.category
+  }
 
   if (existingProduct) {
     const newLagerStatus = parseInt(existingProduct.lager) + parseInt(req.body.lager);
-    const updateLager = await productModel.updateOne({ name: req.body.name }, { $set: { lager: newLagerStatus } });
-    console.log(updateLager);
+    await productModel.updateOne({ name: req.body.name }, { $set: { lager: newLagerStatus } });
     res.status(201).json('New lager status is: ' + newLagerStatus);
   } else {
-    if (token === null) {
-      return res.status(401).json('Unauthorized request!');
-    }
     try {
-      const newProduct = await productModel.create(req.body);
-      res.status(200).send(newProduct);
+      const product = await productModel.create(newProduct).catch(err => {
+        res.status(400).json(err, 'Could not add product, check product if product input values are correct')
+      });
+      res.status(200).send(product);
     } catch (error) {
       res.status(500).json(error.message);
     }
