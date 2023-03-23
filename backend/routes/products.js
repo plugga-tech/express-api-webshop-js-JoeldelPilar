@@ -6,7 +6,7 @@ router.get('/', async function (req, res, next) {
   try {
     const products = await productModel.find();
     if (products.length === 0) {
-      res.status(302).json('No products in database')
+      res.status(404).json('No products in database')
     }
     res.status(200).send(products);
   } catch (error) {

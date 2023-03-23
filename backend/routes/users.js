@@ -10,7 +10,7 @@ router.get('/', async function (req, res, next) {
   try {
     const users = await userModel.find().select('name email _id');
     if (users.length === 0) {
-      res.status(302).send('No users to show!');
+      res.status(404).send('No users to show!');
     }
     res.status(200).json(users)
 
