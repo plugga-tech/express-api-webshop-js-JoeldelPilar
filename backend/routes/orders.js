@@ -15,7 +15,6 @@ router.post('/add', async function (req, res) {
     const quantity = product.quantity
 
     const foundProduct = await productModel.findOne({ _id: productId });
-
     const newLagerAmount = parseInt(foundProduct.lager) - parseInt(quantity);
 
     await productModel.updateOne({ _id: productId }, { $set: { lager: newLagerAmount } });
@@ -36,12 +35,20 @@ router.post('/add', async function (req, res) {
 
 
 
-router.get('/all', async function (req, res) {
+router.get('/all/:key', async function (req, res) {
+  const key = req.params.key;
+  try {
+    if (key === process.env.API_KEY) {
+      const orders = await orderModel.find().populate('user');
+      res.status(200).send(orders);
+    } else {
+      res.status(401).json('message:' + ' Not Authorized!')
+    }
 
-  const orders = await orderModel.find().populate('user');
+  } catch (err) {
+    res.status(500).json(err);
+  }
 
-
-  res.status(200).send(orders);
 });
 
 
@@ -53,7 +60,7 @@ router.post('/user', async function (req, res) {
 
   try {
     if (token === process.env.API_KEY) {
-      const userOrder = await orderModel.findOne({ user: userId }).populate('user');
+      const userOrder = await orderModel.findOne({ user: userId }).populate('user')
       res.status(200).json(userOrder);
     } else {
       res.status(401).json('Only logged in users can see their orders, please login.');
