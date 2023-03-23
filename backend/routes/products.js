@@ -1,5 +1,6 @@
 const express = require('express');
 const productModel = require('../models/product-model');
+const categoryModel = require('../models/category-model');
 const router = express.Router();
 
 router.get('/', async function (req, res, next) {
@@ -67,5 +68,16 @@ router.post('/add', async function (req, res) {
     }
   }
 });
+
+router.get('/category/:id', async function (req, res) {
+  const category = req.params.id
+
+  try {
+    const products = await productModel.find({ category: category }).populate('category');
+    res.status(200).json(products);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+})
 
 module.exports = router;
