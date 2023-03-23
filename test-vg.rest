@@ -114,14 +114,14 @@ POST http://localhost:3000/api/orders/add
 Content-Type: application/json
 
 {
-  "user": "// USER ID FÖR DEN SOM SKA SKAPA ORDERN",
+  "user": "641b031c62bac1631ef3ec4f",
       "products": [
     {
-      "productId": "// ETT PRODUKT ID",
-      "quantity": 1
+      "productId": "641afe20eb25aadad5bde834",
+      "quantity": 3
     },
     {
-      "productId": "// ETT PRODUKT ID",
+      "productId": "641afe44eb25aadad5bde83b",
       "quantity": 2
     }
   ]
@@ -134,7 +134,7 @@ POST http://localhost:3000/api/orders/user
 Content-Type: application/json
 
 {
-    "user": "// USER ID FÖR DEN SOM SKA VISA ORDERS"
+    "user": "641b031c62bac1631ef3ec4f"
 }
 ###
 
@@ -143,7 +143,7 @@ POST http://localhost:3000/api/orders/user
 Content-Type: application/json
 
 {
-    "user": "// USER ID FÖR DEN SOM SKA VISA ORDERS",
+    "user": "641b031c62bac1631ef3ec4f",
     "token": "1234key1234"
 }
 ###
