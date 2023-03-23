@@ -23,8 +23,8 @@ POST http://localhost:3000/api/users/add
 Content-Type: application/json
 
 {
-  "name": "Best Bestsson",
-  "email": "BB@mail.com",
+  "name": "Arne Astsson",
+  "email": "AA@mail.com",
   "password": "test"
 }
 
@@ -51,7 +51,7 @@ GET http://localhost:3000/api/products
 ###
 
 // HÄMTA SPECIFIK PRODUKT
-GET http://localhost:3000/api/products/6419a3b2a5ebca4f62781dd6
+GET http://localhost:3000/api/products/641c2cfcd7fe34eeea3b0900
 
 ###
 
@@ -60,11 +60,11 @@ POST http://localhost:3000/api/products/add
 Content-Type: application/json
 
 {
-  "name": "Produkt 5",
-  "description": "Beskrivning av produkt 5",
-  "price": 99,
+  "name": "Kastkniv",
+  "description": "Vass",
+  "price": 199,
   "lager": 20,
-  "category": "// ID PÅ EN SPECIFIK KATEGORI",
+  "category": ["641c2ca0d7fe34eeea3b08fa", "641c2c99d7fe34eeea3b08f7"],
   "token": "1234key1234"
 }
 
@@ -84,7 +84,7 @@ POST http://localhost:3000/api/categories/add
 Content-Type: application/json
 
 {
-  "name": "Kategori 1",
+  "name": "Svärd",
   "token": "1234key1234"
 }
 
@@ -100,12 +100,12 @@ GET http://localhost:3000/api/categories
 //
 
 // HÄMTA ALLA ORDERS, KEY MÅSTE ANGES FÖR ATT FÅ TILLGÅNG TILL ORDERS
-GET http://localhost:3000/api/orders/all/ // API TOKEN
+GET http://localhost:3000/api/orders/all/1234key1234
 
 ###
 
 // HÄMTA ALLA ORDER, FEL KEY // SKALL MISSLYCKAS
-GET http://localhost:3000/api/orders/all/ // TEST MED FEL TOKEN
+GET http://localhost:3000/api/orders/all/4321yek4321
 
 ###
 
@@ -117,11 +117,11 @@ Content-Type: application/json
   "user": "641b031c62bac1631ef3ec4f",
       "products": [
     {
-      "productId": "641afe20eb25aadad5bde834",
+      "productId": "641c2cfcd7fe34eeea3b0900",
       "quantity": 3
     },
     {
-      "productId": "641afe44eb25aadad5bde83b",
+      "productId": "641c2d89d7fe34eeea3b0905",
       "quantity": 2
     }
   ]
