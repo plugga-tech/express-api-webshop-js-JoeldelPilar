@@ -1,15 +1,15 @@
 <template>
-  <div class="about">
-    <h1>This is an about page</h1>
+  <div class="orders">
+    <h1>Orders view</h1>
   </div>
 </template>
 
 <style>
-@media (min-width: 1024px) {
-  .about {
+/* @media (min-width: 1024px) {
+  .orders {
     min-height: 100vh;
     display: flex;
     align-items: center;
   }
-}
+} */
 </style>
