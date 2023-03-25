@@ -12,7 +12,8 @@
         <input type="password" v-model="form.password" />
       </label>
       <div>{{ status }}</div>
-      <button type="submit">Login</button>
+      <button v-if="loggedIn" type="button" @click="logoutSubmit">Log out</button>
+      <button v-else type="submit">Login</button>
     </form>
   </div>
 </template>
@@ -30,13 +31,16 @@ export default {
       password: ''
     })
 
+    const loggedIn = ref(false)
+
     const loginSubmit = async () => {
       try {
         const login = await StoreService.loginUser(form)
         console.log(login)
         if (login.status === 200) {
-          status.value = login.data
-          localStorage.setItem('token', login.data)
+          status.value = login.data.name + ' is logged in!'
+          loggedIn.value = true
+          localStorage.setItem('token', login.data.loggedIn)
         } else {
           status.value = 'Något gick fel, försök igen!'
         }
@@ -45,11 +49,19 @@ export default {
       }
     }
 
+    const logoutSubmit = async () => {
+      loggedIn.value = false
+      localStorage.setItem('token', false)
+      status.value = ''
+    }
+
     return {
       title,
       form,
       status,
-      loginSubmit
+      loginSubmit,
+      logoutSubmit,
+      loggedIn
     }
   }
 }

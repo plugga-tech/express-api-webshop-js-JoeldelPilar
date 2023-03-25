@@ -9,12 +9,12 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      name: 'home',
+      name: 'products',
       component: ProductsView
     },
     {
-      path: '/about',
-      name: 'about',
+      path: '/orders',
+      name: 'orders',
       component: OrdersView
     },
     {

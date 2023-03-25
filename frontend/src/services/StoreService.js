@@ -16,5 +16,9 @@ export default {
 
   loginUser(userData) {
     return apiClient.post('/users/login', userData);
+  },
+
+  getProducts() {
+    return apiClient.get('/products');
   }
 }

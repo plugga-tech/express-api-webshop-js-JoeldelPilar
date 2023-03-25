@@ -2,8 +2,9 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
 const userModel = require('../models/user-model');
+const cookieParser = require('cookie-parser');
 
-
+router.use(cookieParser('randomkey'));
 
 router.get('/', async function (req, res, next) {
 
@@ -70,7 +71,13 @@ router.post('/login', async function (req, res, next) {
   }
   try {
     if (await bcrypt.compare(user.password, foundUser.password)) {
-      res.status(200).json(foundUser.name + ' has logged in!');
+      res.cookie('loggedIn', 'qweRTY4312')
+      const response = {
+        name: foundUser.name,
+        loggedIn: true
+      }
+      res.status(200).json(response);
+
     } else {
       res.status(401).json('Password was incorrect, please try again!')
     }
