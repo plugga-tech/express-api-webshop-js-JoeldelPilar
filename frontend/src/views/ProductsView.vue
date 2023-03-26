@@ -3,6 +3,7 @@
     <div class="head">
       <h1>Products view</h1>
       <div>cart {{ cart.length }}</div>
+      <button @click="sendOrder(cart)">Beställ</button>
     </div>
     <ProductsList
       v-for="product in products"
@@ -24,25 +25,48 @@ export default {
 
   setup() {
     const cart = reactive([])
+    const token = localStorage.getItem('token')
 
     const products = ref(null)
 
     onMounted(() => {
       StoreService.getProducts().then((response) => {
         products.value = response.data
-        console.log(response.data)
       })
     })
 
     function addToCart(product) {
-      cart.push(product)
-      console.log(cart)
+      const item = {
+        productId: product,
+        quantity: 1
+      }
+      const excistingItem = cart.find((item) => item.productId === product)
+      if (excistingItem) {
+        excistingItem.quantity += 1
+      } else {
+        cart.push(item)
+      }
     }
 
     return {
       cart,
       products,
-      addToCart
+      addToCart,
+      token
+    }
+  },
+  methods: {
+    async sendOrder(products) {
+      const order = {
+        user: localStorage.getItem('id'),
+        products: products
+      }
+      const jsonOrder = JSON.stringify(order)
+      console.log(jsonOrder)
+      StoreService.sendOrder(order).then((response) => {
+        console.log(response.data)
+      })
+      this.cart.splice(0, this.cart.length)
     }
   }
 }

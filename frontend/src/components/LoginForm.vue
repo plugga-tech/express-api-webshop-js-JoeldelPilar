@@ -41,6 +41,7 @@ export default {
           status.value = login.data.name + ' is logged in!'
           loggedIn.value = true
           localStorage.setItem('token', login.data.loggedIn)
+          localStorage.setItem('id', login.data.id)
         } else {
           status.value = 'Något gick fel, försök igen!'
         }
@@ -52,6 +53,7 @@ export default {
     const logoutSubmit = async () => {
       loggedIn.value = false
       localStorage.setItem('token', false)
+      localStorage.removeItem('id')
       status.value = ''
     }
 

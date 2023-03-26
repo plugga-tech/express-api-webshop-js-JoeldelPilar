@@ -74,6 +74,7 @@ router.post('/login', async function (req, res, next) {
       res.cookie('loggedIn', 'qweRTY4312')
       const response = {
         name: foundUser.name,
+        id: foundUser.id,
         loggedIn: true
       }
       res.status(200).json(response);

@@ -23,7 +23,6 @@ export default {
 
   methods: {
     sendToCart(productId) {
-      console.log(productId)
       this.$emit('to-cart', productId)
     }
   }

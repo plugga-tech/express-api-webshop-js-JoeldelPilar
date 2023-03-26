@@ -20,5 +20,8 @@ export default {
 
   getProducts() {
     return apiClient.get('/products');
+  },
+  sendOrder(orderData) {
+    return apiClient.post('/orders/add', orderData);
   }
 }
