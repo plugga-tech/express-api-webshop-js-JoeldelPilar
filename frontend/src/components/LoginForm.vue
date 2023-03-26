@@ -12,14 +12,14 @@
         <input type="password" v-model="form.password" />
       </label>
       <div>{{ status }}</div>
-      <button v-if="loggedIn" type="button" @click="logoutSubmit">Log out</button>
-      <button v-else type="submit">Login</button>
+      <button v-if="loggedIn === 'false'" type="submit">Login</button>
+      <button v-if="loggedIn === 'true'" type="button" @click="logoutSubmit">Log out</button>
     </form>
   </div>
 </template>
 
 <script>
-import { reactive, ref } from 'vue'
+import { onMounted, reactive, ref } from 'vue'
 import StoreService from '@/services/StoreService.js'
 export default {
   setup() {
@@ -31,7 +31,14 @@ export default {
       password: ''
     })
 
-    const loggedIn = ref(false)
+    onMounted(() => {
+      const token = localStorage.getItem('token')
+      if (token) {
+        loggedIn.value = 'true'
+      }
+    })
+
+    const loggedIn = ref('false')
 
     const loginSubmit = async () => {
       try {
@@ -39,9 +46,9 @@ export default {
         console.log(login)
         if (login.status === 200) {
           status.value = login.data.name + ' is logged in!'
-          loggedIn.value = true
-          localStorage.setItem('token', login.data.loggedIn)
+          localStorage.setItem('token', Boolean(login.data.loggedIn))
           localStorage.setItem('id', login.data.id)
+          loggedIn.value = localStorage.getItem('token')
         } else {
           status.value = 'Något gick fel, försök igen!'
         }
@@ -51,10 +58,10 @@ export default {
     }
 
     const logoutSubmit = async () => {
-      loggedIn.value = false
-      localStorage.setItem('token', false)
+      localStorage.removeItem('token')
       localStorage.removeItem('id')
       status.value = ''
+      loggedIn.value = 'false'
     }
 
     return {

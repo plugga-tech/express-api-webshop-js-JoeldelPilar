@@ -21,7 +21,13 @@ export default {
   getProducts() {
     return apiClient.get('/products');
   },
+
   sendOrder(orderData) {
     return apiClient.post('/orders/add', orderData);
+  },
+
+  getOrder(getOrderData) {
+    return apiClient.post('/orders/user', getOrderData)
   }
+
 }

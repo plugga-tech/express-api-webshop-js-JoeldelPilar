@@ -3,7 +3,9 @@
     <div class="head">
       <h1>Products view</h1>
       <div>cart {{ cart.length }}</div>
-      <button @click="sendOrder(cart)">Beställ</button>
+      <button v-if="isLoggedIn" @click="sendOrder(cart)">Beställ</button>
+      <p v-if="!isLoggedIn">Logga in för att beställa</p>
+      <div>{{ successMessage }}</div>
     </div>
     <ProductsList
       v-for="product in products"
@@ -25,14 +27,15 @@ export default {
 
   setup() {
     const cart = reactive([])
-    const token = localStorage.getItem('token')
-
+    const isLoggedIn = localStorage.getItem('token')
     const products = ref(null)
+    const successMessage = ref('')
 
     onMounted(() => {
       StoreService.getProducts().then((response) => {
         products.value = response.data
       })
+      // checkLogginStatus()
     })
 
     function addToCart(product) {
@@ -48,11 +51,19 @@ export default {
       }
     }
 
+    // function checkLogginStatus() {
+    //   const loggedIn = localStorage.getItem('token')
+    //   console.log(loggedIn)
+    //   isLoggedIn.value = Boolean(loggedIn)
+    //   console.log(isLoggedIn.value)
+    // }
+
     return {
       cart,
       products,
       addToCart,
-      token
+      isLoggedIn,
+      successMessage
     }
   },
   methods: {
@@ -61,14 +72,15 @@ export default {
         user: localStorage.getItem('id'),
         products: products
       }
-      const jsonOrder = JSON.stringify(order)
-      console.log(jsonOrder)
+      // const jsonOrder = JSON.stringify(order)
+
       StoreService.sendOrder(order).then((response) => {
-        console.log(response.data)
+        this.successMessage = response.data
       })
       this.cart.splice(0, this.cart.length)
     }
-  }
+  },
+  mounted() {}
 }
 </script>
 <style>

@@ -75,7 +75,7 @@ router.post('/login', async function (req, res, next) {
       const response = {
         name: foundUser.name,
         id: foundUser.id,
-        loggedIn: true
+        loggedIn: Boolean(true)
       }
       res.status(200).json(response);
 

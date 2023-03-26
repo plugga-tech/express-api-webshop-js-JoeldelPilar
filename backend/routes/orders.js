@@ -23,7 +23,7 @@ router.post('/add', async function (req, res) {
   try {
     if (order) {
       const newOrder = await orderModel.create(order);
-      res.status(201).json(newOrder)
+      res.status(201).json('We have recived your order and will ship out asap!')
     } else {
       res.status(400).json('Could not create order, check required fields');
     }
@@ -60,7 +60,7 @@ router.post('/user', async function (req, res) {
 
   try {
     if (token === process.env.API_KEY) {
-      const userOrder = await orderModel.findOne({ user: userId }).populate('user')
+      const userOrder = await orderModel.find({ user: userId }).populate('user').populate({ path: 'products.productId', model: 'products' })
       res.status(200).json(userOrder);
     } else {
       res.status(401).json('Only logged in users can see their orders, please login.');
